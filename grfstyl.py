@@ -14,10 +14,17 @@ inch_unit = 1.0
 mm_unit   = 1.0 / mm_per_inch
 
 
+# Aspect ratios
+golden_ratio = 0.5*(5.0**0.5+1.0)
+iso_ratio    = 2.0**0.5
+
+
 # Page sizes
 class PageSize:
-    _width  = None
-    _height = None
+    _width               = None
+    _height              = None
+    _figure_aspect_ratio = None
+    _figure_width_ratio  = None
 
     def height( self ):
         return self._height
@@ -40,9 +47,17 @@ class PageSize:
     def aspect_ratio( self ):
         return self.longest_length() / self.shortest_length()
 
+    def figure_width( self ):
+        return self.width() * self._figure_width_ratio
+
+    def figure_height( self ):
+        return self.figure_width() / self._figure_aspect_ratio
+
     def __init__( self, width, height ):
         self._width               = width
         self._height              = height
+        self._figure_aspect_ratio = golden_ratio
+        self._figure_width_ratio  = 0.8
 
 page_sizes           = {}
 page_sizes["letter"] = PageSize(   8.5 * inch_unit,  11.0 * inch_unit )
@@ -52,26 +67,24 @@ page_sizes["beamer"] = PageSize( 128.0 *   mm_unit,  96.0 *   mm_unit )
 selected_page_size = None
 
 
-# Aspect ratios
-golden_ratio = 0.5*(5.0**0.5+1.0)
-iso_ratio    = 2.0**0.5
-
-
 # Colors
 black = [ 0.0, 0.0, 0.0 ]
 white = [ 1.0, 1.0, 1.0 ]
+transparent_color = "None"
 
 axis_color       = black
 background_color = white
-no_color         = "None"
+foreground_color = black
 text_color       = black
 
-
 # Line widths
-def iso_line_width( level, default_width=0.25*points_per_mm ):
-    return round( default_width * iso_ratio**level, 2 )
+def iso_line_width( level, default_width=0.25*mm_unit ):
+    return round(                                       \
+        ( default_width / mm_unit ) * iso_ratio**level, \
+        2                                               \
+    ) * points_per_mm
 
-no_line_width         = 0.0 * inch_unit
+no_line_width         = 0.0 * mm_unit
 very_thin_line_width  = iso_line_width( -2 )
 thin_line_width       = iso_line_width( -1 )
 medium_line_width     = iso_line_width( +0 )
