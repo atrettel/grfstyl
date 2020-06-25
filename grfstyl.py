@@ -2,6 +2,7 @@
 
 # Copyright (C) 2020 Andrew Trettel
 
+from cycler import cycler
 
 # Units (follow TeX's lead)
 mm_per_inch     = 25.4
@@ -47,6 +48,9 @@ class PageSize:
     def aspect_ratio( self ):
         return self.longest_length() / self.shortest_length()
 
+    def figure_size( self ):
+        return ( self.figure_width(), self.figure_height() )
+
     def figure_width( self ):
         return self.width() * self._figure_width_ratio
 
@@ -64,7 +68,7 @@ page_sizes["letter"] = PageSize(   8.5 * inch_unit,  11.0 * inch_unit )
 page_sizes["a4"]     = PageSize( 210.0 *   mm_unit, 297.0 *   mm_unit )
 page_sizes["beamer"] = PageSize( 128.0 *   mm_unit,  96.0 *   mm_unit )
 
-selected_page_size = None
+selected_page_size = page_sizes["letter"]
 
 
 # Colors
@@ -72,13 +76,13 @@ black = [ 0.0, 0.0, 0.0 ]
 white = [ 1.0, 1.0, 1.0 ]
 transparent_color = "None"
 
-axis_color       = black
 background_color = white
 foreground_color = black
 text_color       = black
 
+
 # Line widths
-def iso_line_width( level, default_width=0.25*mm_unit ):
+def iso_line_width( level, default_width=0.35*mm_unit ):
     return round(                                       \
         ( default_width / mm_unit ) * iso_ratio**level, \
         2                                               \
@@ -91,6 +95,66 @@ medium_line_width     = iso_line_width( +0 )
 thick_line_width      = iso_line_width( +1 )
 very_thick_line_width = iso_line_width( +2 )
 
-axis_line_width    = thin_line_width
-default_line_width = medium_line_width
-grid_line_width    = thin_line_width
+rc_custom_preamble = {
+    "axes.edgecolor":        foreground_color,
+    "axes.facecolor":        background_color,
+    "axes.grid":             False,
+    "axes.grid.axis":        "both",
+    "axes.grid.which":       "both",
+    "axes.linewidth":        very_thin_line_width,
+    "axes.spines.bottom":    True,
+    "axes.spines.left":      True,
+    "axes.spines.right":     False,
+    "axes.spines.top":       False,
+    "axes.unicode_minus":    False,
+    "axes.prop_cycle":       cycler( "color", [foreground_color] ),
+    "figure.edgecolor":      background_color,
+    "figure.facecolor":      background_color,
+    "figure.frameon":        False,
+    "figure.figsize":        selected_page_size.figure_size(),
+    "grid.color":            foreground_color,
+    "grid.linestyle":        "dotted",
+    "grid.linewidth":        very_thin_line_width,
+    "legend.frameon":        False,
+    "lines.color":           foreground_color,
+    "lines.linestyle":       "solid",
+    "lines.linewidth":       medium_line_width,
+    "lines.marker":          None,
+    "lines.markeredgecolor": "auto",
+    "lines.markeredgewidth": thin_line_width,
+    "lines.markerfacecolor": "auto",
+    "lines.markersize":      4.0*medium_line_width,
+    "pgf.preamble": [
+        r"\usepackage{amsmath}",
+        r"\usepackage{amsfonts}",
+        r"\usepackage{amssymb}",
+    ],
+    "pgf.rcfonts":         False,
+    "pgf.texsystem":       "pdflatex",
+    "savefig.transparent": True,
+    "text.usetex":         False,
+    "xtick.alignment":     "center",
+    "xtick.bottom":        True,
+    "xtick.color":         foreground_color,
+    "xtick.direction":     "out",
+    "xtick.labelbottom":   True,
+    "xtick.labeltop":      False,
+    "xtick.major.size":    4.0,
+    "xtick.major.width":   very_thin_line_width,
+    "xtick.minor.size":    2.0,
+    "xtick.minor.visible": False,
+    "xtick.minor.width":   very_thin_line_width,
+    "xtick.top":           False,
+    "ytick.alignment":     "center_baseline",
+    "ytick.color":         foreground_color,
+    "ytick.direction":     "out",
+    "ytick.labelleft":     True,
+    "ytick.labelright":    False,
+    "ytick.left":          True,
+    "ytick.major.size":    4.0,
+    "ytick.major.width":   very_thin_line_width,
+    "ytick.minor.size":    2.0,
+    "ytick.minor.visible": False,
+    "ytick.minor.width":   very_thin_line_width,
+    "ytick.right":         False,
+}
