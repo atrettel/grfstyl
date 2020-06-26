@@ -78,15 +78,17 @@ page_size = None
 
 
 # Colors
-black = [ 0.0, 0.0, 0.0 ]
-white = [ 1.0, 1.0, 1.0 ]
+black = [ 0.0 ] * 3
+gray  = [ 0.5 ] * 3
+white = [ 1.0 ] * 3
 transparent_color = "None"
 
 background_color = white
 foreground_color = black
+neutral_color    = gray
 
 axis_color = foreground_color
-grid_color = foreground_color
+grid_color = neutral_color
 plot_color = foreground_color
 text_color = foreground_color
 
