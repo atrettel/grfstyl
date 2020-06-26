@@ -11,8 +11,9 @@ points_per_mm   = points_per_inch / mm_per_inch
 
 # Matplotlib mostly uses inches for length, but also uses points for line
 # widths.
-inch_unit = 1.0
-mm_unit   = 1.0 / mm_per_inch
+inch_unit   = 1.0
+mm_unit     = 1.0 / mm_per_inch
+points_unit = 1.0
 
 
 # Aspect ratios
@@ -78,7 +79,11 @@ transparent_color = "None"
 
 background_color = white
 foreground_color = black
-text_color       = black
+
+axis_color = foreground_color
+grid_color = foreground_color
+plot_color = foreground_color
+text_color = foreground_color
 
 
 # Line widths
@@ -95,66 +100,103 @@ medium_line_width     = iso_line_width( +0 )
 thick_line_width      = iso_line_width( +1 )
 very_thick_line_width = iso_line_width( +2 )
 
+axis_line_width   =    very_thin_line_width
+grid_line_width   =    very_thin_line_width
+plot_line_width   =       medium_line_width
+marker_edge_width =         thin_line_width
+marker_size       = 4.0 * medium_line_width
+major_tick_length = 4.0 * points_unit
+minor_tick_length = 2.0 * points_unit
+title_pad         = 4.0 * points_unit
+label_pad         = 4.0 * points_unit
+
+
+# Other parameters
+def label_axes( ax, x_label, y_label ):
+    ax.set_xlabel(
+        x_label,
+        horizontalalignment="center",
+        verticalalignment="top",
+        rotation=0.0
+    )
+    ax.set_ylabel(
+        y_label,
+        horizontalalignment="right",
+        verticalalignment="center",
+        rotation=0.0
+    )
+
+
+# Custom preamble
 rc_custom_preamble = {
-    "axes.edgecolor":        foreground_color,
+    "axes.labelpad":         label_pad,
+    "axes.titlepad":         title_pad,
+    "axes.edgecolor":        axis_color,
     "axes.facecolor":        background_color,
-    "axes.grid":             False,
+    "axes.grid":             True,
     "axes.grid.axis":        "both",
     "axes.grid.which":       "both",
-    "axes.linewidth":        very_thin_line_width,
+    "axes.labelcolor":       text_color,
+    "axes.linewidth":        axis_line_width,
+    "axes.prop_cycle":       cycler( "color", [plot_color] ),
     "axes.spines.bottom":    True,
     "axes.spines.left":      True,
     "axes.spines.right":     False,
     "axes.spines.top":       False,
     "axes.unicode_minus":    False,
-    "axes.prop_cycle":       cycler( "color", [foreground_color] ),
     "figure.edgecolor":      background_color,
     "figure.facecolor":      background_color,
     "figure.frameon":        False,
     "figure.figsize":        selected_page_size.figure_size(),
-    "grid.color":            foreground_color,
+    "grid.color":            grid_color,
     "grid.linestyle":        "dotted",
-    "grid.linewidth":        very_thin_line_width,
+    "grid.linewidth":        grid_line_width,
     "legend.frameon":        False,
-    "lines.color":           foreground_color,
+    "lines.color":           plot_color,
     "lines.linestyle":       "solid",
-    "lines.linewidth":       medium_line_width,
+    "lines.linewidth":       plot_line_width,
     "lines.marker":          None,
     "lines.markeredgecolor": "auto",
-    "lines.markeredgewidth": thin_line_width,
+    "lines.markeredgewidth": marker_edge_width,
     "lines.markerfacecolor": "auto",
-    "lines.markersize":      4.0*medium_line_width,
+    "lines.markersize":      marker_size,
     "pgf.preamble": [
         r"\usepackage{amsmath}",
         r"\usepackage{amsfonts}",
         r"\usepackage{amssymb}",
+        r"\usepackage{lettsymb}",
     ],
     "pgf.rcfonts":         False,
     "pgf.texsystem":       "pdflatex",
     "savefig.transparent": True,
+    "text.color":          text_color,
     "text.usetex":         False,
     "xtick.alignment":     "center",
     "xtick.bottom":        True,
-    "xtick.color":         foreground_color,
+    "xtick.color":         axis_color,
     "xtick.direction":     "out",
     "xtick.labelbottom":   True,
     "xtick.labeltop":      False,
-    "xtick.major.size":    4.0,
-    "xtick.major.width":   very_thin_line_width,
-    "xtick.minor.size":    2.0,
+    "xtick.major.size":    major_tick_length,
+    "xtick.major.width":   axis_line_width,
+    "xtick.major.pad":     major_tick_length,
+    "xtick.minor.pad":     major_tick_length,
+    "ytick.major.pad":     major_tick_length,
+    "ytick.minor.pad":     major_tick_length,
+    "xtick.minor.size":    minor_tick_length,
     "xtick.minor.visible": False,
-    "xtick.minor.width":   very_thin_line_width,
+    "xtick.minor.width":   axis_line_width,
     "xtick.top":           False,
     "ytick.alignment":     "center_baseline",
-    "ytick.color":         foreground_color,
+    "ytick.color":         axis_color,
     "ytick.direction":     "out",
     "ytick.labelleft":     True,
     "ytick.labelright":    False,
     "ytick.left":          True,
-    "ytick.major.size":    4.0,
-    "ytick.major.width":   very_thin_line_width,
-    "ytick.minor.size":    2.0,
+    "ytick.major.size":    major_tick_length,
+    "ytick.major.width":   axis_line_width,
+    "ytick.minor.size":    minor_tick_length,
     "ytick.minor.visible": False,
-    "ytick.minor.width":   very_thin_line_width,
+    "ytick.minor.width":   axis_line_width,
     "ytick.right":         False,
 }
