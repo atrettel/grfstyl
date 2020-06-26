@@ -23,10 +23,14 @@ iso_ratio    = 2.0**0.5
 
 # Page sizes
 class PageSize:
+    _name                = None
     _width               = None
     _height              = None
     _figure_aspect_ratio = None
     _figure_width_ratio  = None
+
+    def name( self ):
+        return self._name
 
     def height( self ):
         return self._height
@@ -58,18 +62,19 @@ class PageSize:
     def figure_height( self ):
         return self.figure_width() / self._figure_aspect_ratio
 
-    def __init__( self, width, height ):
+    def __init__( self, name, width, height ):
+        self._name                = name
         self._width               = width
         self._height              = height
         self._figure_aspect_ratio = golden_ratio
         self._figure_width_ratio  = 0.8
 
 page_sizes           = {}
-page_sizes["letter"] = PageSize(   8.5 * inch_unit,  11.0 * inch_unit )
-page_sizes["a4"]     = PageSize( 210.0 *   mm_unit, 297.0 *   mm_unit )
-page_sizes["beamer"] = PageSize( 128.0 *   mm_unit,  96.0 *   mm_unit )
+page_sizes["letter"] = PageSize( "letter",   8.5*inch_unit,  11.0*inch_unit )
+page_sizes["a4"]     = PageSize( "a4",     210.0*  mm_unit, 297.0*  mm_unit )
+page_sizes["beamer"] = PageSize( "beamer", 128.0*  mm_unit,  96.0*  mm_unit )
 
-selected_page_size = page_sizes["letter"]
+page_size = None
 
 
 # Colors
@@ -146,7 +151,7 @@ def rc_custom_preamble():
         "figure.edgecolor":      background_color,
         "figure.facecolor":      background_color,
         "figure.frameon":        False,
-        "figure.figsize":        selected_page_size.figure_size(),
+        "figure.figsize":        page_size.figure_size(),
         "grid.color":            grid_color,
         "grid.linestyle":        "dotted",
         "grid.linewidth":        grid_line_width,
@@ -199,3 +204,9 @@ def rc_custom_preamble():
         "ytick.minor.width":   axis_line_width,
         "ytick.right":         False,
     }
+
+def update_page_size( name ):
+    global page_size
+    page_size = page_sizes[name]
+
+update_page_size("letter")
