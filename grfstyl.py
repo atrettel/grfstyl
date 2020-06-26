@@ -208,15 +208,19 @@ def rc_custom_preamble():
         "ytick.right":         False,
     }
 
-def update_page_size( name ):
+def update_page_size( name, dark=False ):
     # Page sizes
     global page_size
     page_size = page_sizes[name]
 
     # Colors
     global background_color, foreground_color, neutral_color
-    background_color = white
-    foreground_color = black
+    if ( dark ):
+        background_color = black
+        foreground_color = white
+    else:
+        background_color = white
+        foreground_color = black
     neutral_color    = gray
 
     global axis_color, grid_color, plot_color, text_color
