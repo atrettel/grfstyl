@@ -83,42 +83,43 @@ gray  = [ 0.5 ] * 3
 white = [ 1.0 ] * 3
 transparent_color = "None"
 
-background_color = white
-foreground_color = black
-neutral_color    = gray
+background_color = None
+foreground_color = None
+neutral_color    = None
 
-axis_color = foreground_color
-grid_color = neutral_color
-plot_color = foreground_color
-text_color = foreground_color
+axis_color = None
+grid_color = None
+plot_color = None
+text_color = None
 
 
-# Line widths
+# Dimensions
+no_line_width         = 0.0 * mm_unit
+very_thin_line_width  = None
+thin_line_width       = None
+medium_line_width     = None
+thick_line_width      = None
+very_thick_line_width = None
+
+axis_line_width   = None
+grid_line_width   = None
+plot_line_width   = None
+marker_edge_width = None
+
+marker_size       = None
+major_tick_length = None
+minor_tick_length = None
+title_pad         = None
+label_pad         = None
+
+
+# Functions
 def iso_line_width( level, default_width=0.35*mm_unit ):
     return round(                                       \
         ( default_width / mm_unit ) * iso_ratio**level, \
         2                                               \
     ) * points_per_mm
 
-no_line_width         = 0.0 * mm_unit
-very_thin_line_width  = iso_line_width( -2 )
-thin_line_width       = iso_line_width( -1 )
-medium_line_width     = iso_line_width( +0 )
-thick_line_width      = iso_line_width( +1 )
-very_thick_line_width = iso_line_width( +2 )
-
-axis_line_width   =    very_thin_line_width
-grid_line_width   =    very_thin_line_width
-plot_line_width   =       medium_line_width
-marker_edge_width =         thin_line_width
-marker_size       = 4.0 * medium_line_width
-major_tick_length = 4.0 * points_unit
-minor_tick_length = 2.0 * points_unit
-title_pad         = 4.0 * points_unit
-label_pad         = 4.0 * points_unit
-
-
-# Functions
 def label_axes( ax, x_label, y_label ):
     ax.set_xlabel(
         x_label,
@@ -208,7 +209,43 @@ def rc_custom_preamble():
     }
 
 def update_page_size( name ):
+    # Page sizes
     global page_size
     page_size = page_sizes[name]
+
+    # Colors
+    global background_color, foreground_color, neutral_color
+    background_color = white
+    foreground_color = black
+    neutral_color    = gray
+
+    global axis_color, grid_color, plot_color, text_color
+    axis_color = foreground_color
+    grid_color = neutral_color
+    plot_color = foreground_color
+    text_color = foreground_color
+
+    # Dimensions
+    global very_thin_line_width, thin_line_width, medium_line_width, \
+        thick_line_width, very_thick_line_width
+    very_thin_line_width  = iso_line_width( -2 )
+    thin_line_width       = iso_line_width( -1 )
+    medium_line_width     = iso_line_width( +0 )
+    thick_line_width      = iso_line_width( +1 )
+    very_thick_line_width = iso_line_width( +2 )
+
+    global axis_line_width, grid_line_width, plot_line_width, marker_edge_width
+    axis_line_width   =    very_thin_line_width
+    grid_line_width   =    very_thin_line_width
+    plot_line_width   =       medium_line_width
+    marker_edge_width =         thin_line_width
+
+    global marker_size, major_tick_length, minor_tick_length, title_pad, \
+        label_pad
+    marker_size       = 4.0 * medium_line_width
+    major_tick_length = 4.0 * points_unit
+    minor_tick_length = 2.0 * points_unit
+    title_pad         = 4.0 * points_unit
+    label_pad         = 4.0 * points_unit
 
 update_page_size("letter")
