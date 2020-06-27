@@ -113,7 +113,7 @@ title_pad         = None
 label_pad         = None
 
 
-## Line styles
+# Line styles
 grid_line_style = "dotted"
 plot_line_style = "solid"
 
