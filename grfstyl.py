@@ -105,12 +105,14 @@ axis_line_width   = None
 grid_line_width   = None
 plot_line_width   = None
 marker_edge_width = None
+error_bar_width   = None
 
-marker_size       = None
-major_tick_length = None
-minor_tick_length = None
-title_pad         = None
-label_pad         = None
+marker_size        = None
+error_bar_cap_size = None
+major_tick_length  = None
+minor_tick_length  = None
+title_pad          = None
+label_pad          = None
 
 
 # Line styles
@@ -148,77 +150,90 @@ def label_axes( ax, x_label, y_label ):
     )
 
 def rc_custom_preamble( use_grid=True, tex_system="pdflatex" ):
+    pgf_preamble = [
+        r"\usepackage{amsmath}",
+        r"\usepackage{amsfonts}",
+        r"\usepackage{amssymb}",
+        r"\usepackage{lettsymb}",
+    ]
     return {
-        "axes.labelpad":         label_pad,
-        "axes.titlepad":         title_pad,
         "axes.edgecolor":        axis_color,
         "axes.facecolor":        background_color,
         "axes.grid":             use_grid,
         "axes.grid.axis":        "both",
         "axes.grid.which":       "both",
         "axes.labelcolor":       text_color,
+        "axes.labelpad":         label_pad,
         "axes.linewidth":        axis_line_width,
         "axes.prop_cycle":       cycler( "color", [plot_color] ),
         "axes.spines.bottom":    True,
         "axes.spines.left":      True,
         "axes.spines.right":     False,
         "axes.spines.top":       False,
+        "axes.titlepad":         title_pad,
         "axes.unicode_minus":    False,
+        "errorbar.capsize":      error_bar_cap_size,
         "figure.edgecolor":      background_color,
         "figure.facecolor":      background_color,
-        "figure.frameon":        False,
         "figure.figsize":        page_size.figure_size(),
+        "figure.frameon":        False,
+        "grid.alpha":            1.0,
         "grid.color":            grid_color,
         "grid.linestyle":        grid_line_style,
         "grid.linewidth":        grid_line_width,
+        "image.aspect":          "equal",
+        "image.cmap":            "binary",
+        "legend.facecolor":      "inherit",
+        "legend.fancybox":       False,
         "legend.frameon":        False,
+        "legend.loc":            "best",
+        "legend.markerscale":    1.0,
+        "legend.numpoints":      1,
+        "legend.scatterpoints":  1,
+        "legend.shadow":         "false",
         "lines.color":           plot_color,
         "lines.linestyle":       plot_line_style,
         "lines.linewidth":       plot_line_width,
         "lines.marker":          None,
-        "lines.markeredgecolor": "auto",
+        "lines.markeredgecolor": plot_color,
         "lines.markeredgewidth": marker_edge_width,
-        "lines.markerfacecolor": "auto",
+        "lines.markerfacecolor": background_color,
         "lines.markersize":      marker_size,
-        "pgf.preamble": [
-            r"\usepackage{amsmath}",
-            r"\usepackage{amsfonts}",
-            r"\usepackage{amssymb}",
-            r"\usepackage{lettsymb}",
-        ],
-        "pgf.rcfonts":         False,
-        "pgf.texsystem":       tex_system,
-        "savefig.transparent": True,
-        "text.color":          text_color,
-        "text.usetex":         False,
-        "xtick.alignment":     "center",
-        "xtick.bottom":        True,
-        "xtick.color":         axis_color,
-        "xtick.direction":     "out",
-        "xtick.labelbottom":   True,
-        "xtick.labeltop":      False,
-        "xtick.major.size":    major_tick_length,
-        "xtick.major.width":   axis_line_width,
-        "xtick.major.pad":     major_tick_length,
-        "xtick.minor.pad":     major_tick_length,
-        "ytick.major.pad":     major_tick_length,
-        "ytick.minor.pad":     major_tick_length,
-        "xtick.minor.size":    minor_tick_length,
-        "xtick.minor.visible": False,
-        "xtick.minor.width":   axis_line_width,
-        "xtick.top":           False,
-        "ytick.alignment":     "center_baseline",
-        "ytick.color":         axis_color,
-        "ytick.direction":     "out",
-        "ytick.labelleft":     True,
-        "ytick.labelright":    False,
-        "ytick.left":          True,
-        "ytick.major.size":    major_tick_length,
-        "ytick.major.width":   axis_line_width,
-        "ytick.minor.size":    minor_tick_length,
-        "ytick.minor.visible": False,
-        "ytick.minor.width":   axis_line_width,
-        "ytick.right":         False,
+        "pgf.preamble":          pgf_preamble,
+        "pgf.rcfonts":           False,
+        "pgf.texsystem":         tex_system,
+        "savefig.transparent":   True,
+        "scatter.marker":        "o",
+        "text.color":            text_color,
+        "text.usetex":           False,
+        "xtick.alignment":       "center",
+        "xtick.bottom":          True,
+        "xtick.color":           axis_color,
+        "xtick.direction":       "out",
+        "xtick.labelbottom":     True,
+        "xtick.labeltop":        False,
+        "xtick.major.pad":       major_tick_length,
+        "xtick.major.size":      major_tick_length,
+        "xtick.major.width":     axis_line_width,
+        "xtick.minor.pad":       major_tick_length,
+        "xtick.minor.size":      minor_tick_length,
+        "xtick.minor.visible":   False,
+        "xtick.minor.width":     axis_line_width,
+        "xtick.top":             False,
+        "ytick.alignment":       "center_baseline",
+        "ytick.color":           axis_color,
+        "ytick.direction":       "out",
+        "ytick.labelleft":       True,
+        "ytick.labelright":      False,
+        "ytick.left":            True,
+        "ytick.major.pad":       major_tick_length,
+        "ytick.major.size":      major_tick_length,
+        "ytick.major.width":     axis_line_width,
+        "ytick.minor.pad":       major_tick_length,
+        "ytick.minor.size":      minor_tick_length,
+        "ytick.minor.visible":   False,
+        "ytick.minor.width":     axis_line_width,
+        "ytick.right":           False,
     }
 
 def update_page_size( name, dark=False ):
@@ -251,18 +266,21 @@ def update_page_size( name, dark=False ):
     thick_line_width      = iso_line_width( +1 )
     very_thick_line_width = iso_line_width( +2 )
 
-    global axis_line_width, grid_line_width, plot_line_width, marker_edge_width
+    global axis_line_width, grid_line_width, plot_line_width, \
+        marker_edge_width, error_bar_width
     axis_line_width   =    very_thin_line_width
     grid_line_width   =    very_thin_line_width
     plot_line_width   =       medium_line_width
     marker_edge_width =         thin_line_width
+    error_bar_width   =       marker_edge_width
 
-    global marker_size, major_tick_length, minor_tick_length, title_pad, \
-        label_pad
-    marker_size       = 4.0 * medium_line_width
-    major_tick_length = 4.0 * points_unit
-    minor_tick_length = 2.0 * points_unit
-    title_pad         = 4.0 * points_unit
-    label_pad         = 4.0 * points_unit
+    global marker_size, error_bar_cap_size, major_tick_length, \
+        minor_tick_length, title_pad, label_pad
+    marker_size        = 4.0 * medium_line_width
+    error_bar_cap_size = 2.0 * medium_line_width
+    major_tick_length  = 4.0 * points_unit
+    minor_tick_length  = 2.0 * points_unit
+    title_pad          = 4.0 * points_unit
+    label_pad          = 4.0 * points_unit
 
 update_page_size("letter")
