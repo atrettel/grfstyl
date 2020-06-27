@@ -28,6 +28,10 @@ class PageSize:
     _height              = None
     _figure_aspect_ratio = None
     _figure_width_ratio  = None
+    _dpi                 = None
+
+    def dpi( self ):
+        return self._dpi
 
     def name( self ):
         return self._name
@@ -62,12 +66,19 @@ class PageSize:
     def figure_height( self ):
         return self.figure_width() / self._figure_aspect_ratio
 
+    # The maximum number of distinct "elements" that could be displayed in one
+    # dimension.  This is a simple measure of the total amount of information
+    # (the resolution) that can fit into any figure on a page of this size.
+    def max_elements( self ):
+        return int( self.dpi() * self.longest_length() )
+
     def __init__( self, name, width, height ):
         self._name                = name
         self._width               = width
         self._height              = height
         self._figure_aspect_ratio = golden_ratio
         self._figure_width_ratio  = 0.8
+        self._dpi                 = 300.0
 
 page_sizes           = {}
 page_sizes["letter"] = PageSize( "letter",   8.5*inch_unit,  11.0*inch_unit )
@@ -173,6 +184,7 @@ def rc_custom_preamble( use_grid=True, tex_system="pdflatex" ):
         "axes.titlepad":         title_pad,
         "axes.unicode_minus":    False,
         "errorbar.capsize":      error_bar_cap_size,
+        "figure.dpi":            page_size.dpi(),
         "figure.edgecolor":      background_color,
         "figure.facecolor":      background_color,
         "figure.figsize":        page_size.figure_size(),
