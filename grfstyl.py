@@ -113,6 +113,11 @@ title_pad         = None
 label_pad         = None
 
 
+## Line styles
+grid_line_style = "dotted"
+plot_line_style = "solid"
+
+
 # Functions
 def iso_line_width( level, default_width=0.35*mm_unit ):
     return round(                                       \
@@ -134,13 +139,13 @@ def label_axes( ax, x_label, y_label ):
         rotation=0.0
     )
 
-def rc_custom_preamble():
+def rc_custom_preamble( use_grid=True, tex_system="pdflatex" ):
     return {
         "axes.labelpad":         label_pad,
         "axes.titlepad":         title_pad,
         "axes.edgecolor":        axis_color,
         "axes.facecolor":        background_color,
-        "axes.grid":             True,
+        "axes.grid":             use_grid,
         "axes.grid.axis":        "both",
         "axes.grid.which":       "both",
         "axes.labelcolor":       text_color,
@@ -156,11 +161,11 @@ def rc_custom_preamble():
         "figure.frameon":        False,
         "figure.figsize":        page_size.figure_size(),
         "grid.color":            grid_color,
-        "grid.linestyle":        "dotted",
+        "grid.linestyle":        grid_line_style,
         "grid.linewidth":        grid_line_width,
         "legend.frameon":        False,
         "lines.color":           plot_color,
-        "lines.linestyle":       "solid",
+        "lines.linestyle":       plot_line_style,
         "lines.linewidth":       plot_line_width,
         "lines.marker":          None,
         "lines.markeredgecolor": "auto",
@@ -174,7 +179,7 @@ def rc_custom_preamble():
             r"\usepackage{lettsymb}",
         ],
         "pgf.rcfonts":         False,
-        "pgf.texsystem":       "pdflatex",
+        "pgf.texsystem":       tex_system,
         "savefig.transparent": True,
         "text.color":          text_color,
         "text.usetex":         False,
