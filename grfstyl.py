@@ -119,6 +119,14 @@ plot_line_style = "solid"
 
 
 # Functions
+def aspect_ratio( xlim, ylim, goal_aspect_ratio=golden_ratio ):
+    return ( xlim[1] - xlim[0] )   \
+           /                       \
+           ( goal_aspect_ratio     \
+             *                     \
+             ( ylim[1] - ylim[0] ) \
+           )
+
 def iso_line_width( level, default_width=0.35*mm_unit ):
     return round(                                       \
         ( default_width / mm_unit ) * iso_ratio**level, \
