@@ -1,0 +1,91 @@
+%% grfstyl.sty
+%% Copyright (C) 2020 Andrew Trettel
+%
+% Licensed under the Apache License, Version 2.0 (the "License"); you may not
+% use this file except in compliance with the License.  You may obtain a copy
+% of the License at
+%
+% <http://www.apache.org/licenses/LICENSE-2.0>
+%
+% Unless required by applicable law or agreed to in writing, software
+% distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+% WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  See the
+% License for the specific language governing permissions and limitations under
+% the License.
+
+\NeedsTeXFormat{LaTeX2e}[1994/06/01]
+\ProvidesPackage{grfstyl}[2020/08/06 Graph styles]
+
+\RequirePackage{xcolor}
+
+
+% Options
+\newif\ifDarkMode
+\newif\ifTwoColumn
+
+\DeclareOption{light}{\DarkModefalse}
+\DeclareOption{dark}{\DarkModetrue}
+\DeclareOption{onecolumn}{\TwoColumnfalse}
+\DeclareOption{twocolumn}{\TwoColumntrue}
+
+\ExecuteOptions{light,onecolumn}
+
+\ProcessOptions\relax
+
+
+% Colors
+\definecolor{black}{gray}{0.0}
+\definecolor{gray}{gray}{0.5}
+\definecolor{white}{gray}{1.0}
+
+\ifDarkMode
+\colorlet{backgroundColor}{black}
+\colorlet{foregroundColor}{white}
+\else
+\colorlet{backgroundColor}{white}
+\colorlet{foregroundColor}{black}
+\fi
+\colorlet{neutralColor}{gray}
+
+\colorlet{axisColor}{foregroundColor}
+\colorlet{gridColor}{neutralColor}
+\colorlet{plotColor}{foregroundColor}
+\colorlet{textColor}{foregroundColor}
+
+
+% Dimensions
+\newlength{        \noLineWidth }
+\newlength{  \veryThinLineWidth }
+\newlength{      \thinLineWidth }
+\newlength{    \mediumLineWidth }
+\newlength{     \thickLineWidth }
+\newlength{ \veryThickLineWidth }
+
+\setlength{        \noLineWidth }{ 0.00mm }
+\setlength{  \veryThinLineWidth }{ 0.17mm }
+\setlength{      \thinLineWidth }{ 0.25mm }
+\setlength{    \mediumLineWidth }{ 0.35mm }
+\setlength{     \thickLineWidth }{ 0.50mm }
+\setlength{ \veryThickLineWidth }{ 0.70mm }
+
+\newlength{ \axisLineWidth }
+\newlength{ \gridLineWidth }
+\newlength{ \plotLineWidth }
+
+\setlength{ \axisLineWidth }{ \veryThinLineWidth }
+\setlength{ \gridLineWidth }{ \veryThinLineWidth }
+\setlength{ \plotLineWidth }{   \mediumLineWidth }
+
+\newlength{ \figureWidth  }
+\newlength{ \figureHeight }
+
+\ifTwoColumn
+\setlength{ \figureWidth  }{ 0.375\paperwidth }
+\else
+\setlength{ \figureWidth  }{ 0.750\paperwidth }
+\fi
+\setlength{ \figureHeight }{ 0.6180339887498948\figureWidth }
+
+
+% EOF
+\endinput
