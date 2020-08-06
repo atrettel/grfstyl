@@ -69,14 +69,17 @@ class PageSize:
     def aspect_ratio( self ):
         return self.longest_length() / self.shortest_length()
 
-    def figure_size( self ):
-        return ( self.figure_width(), self.figure_height() )
+    def figure_size( self, columns=1 ):
+        return (
+            self.figure_width(  columns=columns ),
+            self.figure_height( columns=columns ),
+        )
 
-    def figure_width( self ):
-        return self.width() * self._figure_width_ratio
+    def figure_width( self, columns=1 ):
+        return self.width() * self._figure_width_ratio / float(columns)
 
-    def figure_height( self ):
-        return self.figure_width() / self._figure_aspect_ratio
+    def figure_height( self, columns=1 ):
+        return self.figure_width( columns=columns ) / self._figure_aspect_ratio
 
     # The maximum number of distinct "elements" that could be displayed in one
     # dimension.  This is a simple measure of the total amount of information
@@ -89,7 +92,7 @@ class PageSize:
         self._width               = width
         self._height              = height
         self._figure_aspect_ratio = golden_ratio
-        self._figure_width_ratio  = 0.8
+        self._figure_width_ratio  = 0.75
         self._dpi                 = 300.0
 
 page_sizes           = {}
@@ -172,7 +175,7 @@ def label_axes( ax, x_label, y_label ):
         rotation=0.0
     )
 
-def rc_custom_preamble( use_grid=True, tex_system="pdflatex" ):
+def rc_custom_preamble( use_grid=True, tex_system="pdflatex", columns=1 ):
     pgf_preamble = [
         r"\usepackage{amsmath}",
         r"\usepackage{amsfonts}",
@@ -199,7 +202,7 @@ def rc_custom_preamble( use_grid=True, tex_system="pdflatex" ):
         "figure.dpi":            page_size.dpi(),
         "figure.edgecolor":      background_color,
         "figure.facecolor":      background_color,
-        "figure.figsize":        page_size.figure_size(),
+        "figure.figsize":        page_size.figure_size( columns=columns ),
         "figure.frameon":        False,
         "grid.alpha":            1.0,
         "grid.color":            grid_color,
