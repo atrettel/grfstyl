@@ -8,9 +8,9 @@ bib_compiler=biber
 
 python_targets := $(patsubst %.py,%.tmp,$(wildcard */*.py))
 
-tex_dependencies = $(python_targets) $(index).bcf $(index).tex
+tex_dependencies = $(wildcard *.tex) $(wildcard */*.tex)
 
-$(index).pdf: $(tex_dependencies)
+$(index).pdf: $(python_targets) $(index).bcf $(tex_dependencies)
 	$(latex_compiler) $(index).tex
 	$(latex_compiler) $(index).tex
 
@@ -45,9 +45,9 @@ clean:
 	-rm -frv *.run.xml
 	-rm -frv *.tmp */*.tmp
 	-rm -frv *.toc
-	-rm -frv *Notes.bib
 	-rm -frv *.xwm
+	-rm -frv *Notes.bib
 
 .PHONY: spellcheck
 spellcheck:
-	aspell --lang=en-US --mode=tex --tex-check-comments --dont-backup check $(index).tex
+	find ./ -iname "*.tex" -exec aspell --lang=en-US --mode=tex --tex-check-comments --dont-backup check "{}" \;
