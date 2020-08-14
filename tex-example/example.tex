@@ -1,0 +1,125 @@
+% Copyright (C) 2020 Andrew Trettel
+%
+% Licensed under the MIT License.  See LICENSE.txt for additional details.
+
+\documentclass[12pt,oneside]{article}
+
+\usepackage{iftex}
+
+\usepackage[
+    letterpaper,
+    top=1.0in,
+    bottom=1.0in,
+    inner=1.0in,
+    outer=1.0in
+]{geometry}
+
+\usepackage[
+    natbib=true,
+    bibstyle=authoryear,
+    citestyle=authoryear,
+    doi=true,
+    url=true,
+    maxbibnames=99,
+    maxcitenames=2,
+    mincitenames=1,
+    backend=biber
+]{biblatex}
+\addbibresource{example.bib}
+
+\usepackage[pdfpagelabels]{hyperref}
+
+\usepackage{lettsymb}
+\usepackage{grfstyl}
+\usepackage{tikz}
+
+\usepackage{mathptmx}
+\usepackage{tgheros}
+\usepackage{tgcursor}
+
+\usepackage[T1]{fontenc}
+\ifLuaTeX
+    \usepackage[utf8]{luainputenc}
+\else
+    \usepackage[utf8]{inputenc}
+\fi
+
+\usepackage[english]{babel}
+\usepackage{blindtext}
+\blindmathtrue
+
+\pagenumbering{arabic}
+
+\title{Example document}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\section{First section}
+
+\nocite{DoeJ+2020+eng+BOOK}
+
+\blindmathpaper
+
+\begin{figure}[tb]
+    \centering
+    \begin{tikzpicture}
+        \draw[ line width=\axisLineWidth, color=axisColor,
+        fill=backgroundColor ]
+            ( 0.0\figureWidth, 0.0\figureHeight )
+            rectangle
+            ( 1.0\figureWidth, 1.0\figureHeight );
+
+        \draw[ line width=\veryThinLineWidth, color=foregroundColor ]
+            ( 0.1\figureWidth, 0.0\figureHeight )
+            --
+            ( 0.1\figureWidth, 1.0\figureHeight );
+
+        \draw[ line width=\thinLineWidth, color=foregroundColor ]
+            ( 0.2\figureWidth, 0.0\figureHeight )
+            --
+            ( 0.2\figureWidth, 1.0\figureHeight );
+
+        \draw[ line width=\mediumLineWidth, color=foregroundColor ]
+            ( 0.3\figureWidth, 0.0\figureHeight )
+            --
+            ( 0.3\figureWidth, 1.0\figureHeight );
+
+        \draw[ line width=\thickLineWidth, color=foregroundColor ]
+            ( 0.4\figureWidth, 0.0\figureHeight )
+            --
+            ( 0.4\figureWidth, 1.0\figureHeight );
+
+        \draw[ line width=\veryThickLineWidth, color=foregroundColor ]
+            ( 0.5\figureWidth, 0.0\figureHeight )
+            --
+            ( 0.5\figureWidth, 1.0\figureHeight );
+
+        \draw[ color=gridColor, line width=\gridLineWidth ]
+            ( 0.6\figureWidth, 0.1\figureHeight )
+            grid
+            ( 0.9\figureWidth, 0.9\figureHeight );
+    \end{tikzpicture}
+    \caption{A rectangular box (TikZ)}
+\end{figure}
+
+\section{Second section}
+
+\blindmathpaper
+
+\begin{figure}[tb]
+    \centering
+    \input{content/figure-velocity-profile.pgf}
+    \vspace{\parskip}
+    \caption{Pipe flow velocity profile (Matplotlib)}
+\end{figure}
+
+\section{Third section}
+
+\blindmathpaper
+
+\printbibliography
+
+\end{document}
