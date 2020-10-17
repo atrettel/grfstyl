@@ -6,11 +6,11 @@ index=example
 latex_compiler=pdflatex
 bib_compiler=biber
 
-python_targets := $(patsubst %.py,%.tmp,$(wildcard */*.py))
+script_targets := $(patsubst %.py,%.tmp,$(wildcard */*.py))
 
 tex_dependencies = $(wildcard *.tex) $(wildcard */*.tex)
 
-$(index).pdf: $(python_targets) $(index).bcf $(tex_dependencies)
+$(index).pdf: $(script_targets) $(index).bcf $(tex_dependencies)
 	$(latex_compiler) $(index).tex
 	$(latex_compiler) $(index).tex
 

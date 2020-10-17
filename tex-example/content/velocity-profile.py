@@ -28,6 +28,8 @@ ax.plot( y, u_turbulent, linestyle="dashed", clip_on=False, label="Turbulent" )
 ax.set_xlim( y_bounds )
 ax.set_ylim( u_bounds )
 
+ax.set_title( "Matplotlib" )
+
 legend = ax.legend()
 legend.get_frame().set_linewidth( gfx.axis_line_width )
 
