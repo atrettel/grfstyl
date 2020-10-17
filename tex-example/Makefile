@@ -22,10 +22,9 @@ $(index).bcf: $(index).bib
 	$(latex_compiler) $(index).tex
 
 %.tmp:: %.py
-	PYTHONPATH=$(PYTHONPATH):`pwd` python3 -B $^
+	PYTHONPATH=$(PYTHONPATH):`pwd` python3 -B $^ | tee $@
 	-sed -i "s/\\\\sffamily\\\\fontsize{.*}{.*}\\\\selectfont //g" */*.pgf
 	-sed -i "s/use as bounding box, clip/use as bounding box/g" */*.pgf
-	@touch $@
 
 .PHONY: clean
 clean:
