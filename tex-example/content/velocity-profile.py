@@ -19,8 +19,8 @@ u_bounds = ( 0.0, 2.0 )
 
 y = np.linspace( y_bounds[0], y_bounds[1], gfx.page_size.max_elements() )
 
-u_laminar   = 2.0 * ( 1.0 - y**2.0 )
-u_turbulent = 1.25 * ( 1.0 - y )**( 1.0 / 7.0 )
+u_laminar   = 2.00 * ( 1.0 - y**2.0 )
+u_turbulent = 1.25 * ( 1.0 - y      )**( 1.0 / 7.0 )
 
 ax.plot( y, u_laminar,   linestyle="solid",  clip_on=False, label="Laminar"   )
 ax.plot( y, u_turbulent, linestyle="dashed", clip_on=False, label="Turbulent" )
